@@ -1,0 +1,8 @@
+.card {
+width: calc((100%) / 3);
+    aspect-ratio: 3 / 4;
+    box-sizing: border-box;
+padding: 0, 10px;
+    border-radius: 12px;
+    background-color: aquamarine;
+}
