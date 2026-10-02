@@ -1,3 +1,8 @@
+export type PokemonSpecies = {
+  name: string;
+  url: string;
+};
+
 export type Pokemon = {
   name: string;
   types: string[];
@@ -5,6 +10,11 @@ export type Pokemon = {
 };
 
 export type PokeType = {
-    slot: number;
-    type: {name: string; url: string}
+  slot: number;
+  type: { name: string; url: string };
+};
+
+export type DamageRelations = {
+  type: string;
+  doubleDamageFrom: string[];
 };

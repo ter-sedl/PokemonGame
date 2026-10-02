@@ -4,22 +4,30 @@
 // data jsou to, co jsme od api chtěli
 // async funkce sama o sobě vždy má return v promise (takže je třeba pak další asyn funkce na práci s tím)
 
-import type { Pokemon, PokeType } from "../types/gameTypes";
+import type { PokemonSpecies, PokeType } from "../types/gameTypes";
 
 export async function getPokemonG1() {
     // fetch pokemonů první generace
-    const response = await fetch(
+    const pokemonResponse = await fetch(
         `https://pokeapi.co/api/v2/generation/1`
     );
-// přesun pokemonů do data
-    const data = await response.json();
-// zmapování každého pokemonu z data a přiřazení do array pokemon objekty s name, všechny type a img pro každého pokemona
+// error při http 404/500
+    if (!pokemonResponse.ok) {
+        throw new Error("Nepodařilo se načíst Pokémony.");
+    }
+
+    // přesun pokemonů do pokemonData
+    const pokemonData = await pokemonResponse.json();
+    // zmapování každého pokemonu z data a přiřazení do array pokemon: objekty s name, všechny type a img pro každého pokemona
     const pokemon = await Promise.all(
-        data.pokemon_species.map(async (pokemon: Pokemon) => {
+        pokemonData.pokemon_species.map(async (pokemon: PokemonSpecies) => {
+            console.log(pokemon);
             const response = await fetch(
                 `https://pokeapi.co/api/v2/pokemon/${pokemon.name}`
             );
-
+            if (!response.ok) {
+                throw new Error("Nepodařilo se načíst Pokémony.");
+            }
             const data = await response.json();
 
             return {
@@ -30,4 +38,28 @@ export async function getPokemonG1() {
         })
     );
     return pokemon;
+}
+
+// z dané array typů udělá novou array objektů, kde ke každému typu je double damage from
+export async function getTypeDamageRelations(types: string[]) {
+    const typeData = await Promise.all(
+        types.map(async (type) => {
+            const response = await fetch(
+                `https://pokeapi.co/api/v2/type/${type}`
+            );
+            if (!response.ok) {
+                throw new Error("Nepodařilo se načíst informace o typech.");
+            }
+            const data = await response.json();
+
+            return {
+                type: type,
+                doubleDamageFrom: data.damage_relations.double_damage_from.map(
+                    (type: { name: string }) => type.name
+                ),
+            };
+        })
+    );
+
+    return typeData;
 }
