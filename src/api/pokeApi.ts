@@ -21,7 +21,7 @@ export async function getPokemonG1() {
     // zmapování každého pokemonu z data a přiřazení do array pokemon: objekty s name, všechny type a img pro každého pokemona
     const pokemon = await Promise.all(
         pokemonData.pokemon_species.map(async (pokemon: PokemonSpecies) => {
-            console.log(pokemon);
+            // console.log(pokemon);
             const response = await fetch(
                 `https://pokeapi.co/api/v2/pokemon/${pokemon.name}`
             );
