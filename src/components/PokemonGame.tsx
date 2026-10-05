@@ -3,9 +3,9 @@ import PokemonChoices from "./PokemonChoices"
 import ResultExplanation from "./ResultExplanation"
 import ScoreBoard from "./ScoreBoard"
 import { getPokemonG1, getTypeDamageRelations } from "../api/pokeApi"
-import { useEffect, useState } from "react"
-import type { Pokemon, DamageRelations, EnemyPokemon } from "../types/gameTypes"
-import { getUniqueTypes, getRandomEnemy } from "../gameLogic/gameLogic"
+import { useEffect, useRef, useState } from "react"
+import type { Pokemon, DamageRelations, EnemyPokemon, CardType } from "../types/gameTypes"
+import { getUniqueTypes, getRandomEnemy, getPokemonCards } from "../gameLogic/gameLogic"
 
 function PokemonGame() {
 
@@ -14,20 +14,31 @@ function PokemonGame() {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [enemy, setEnemy] = useState<EnemyPokemon | null>(null);
+  const [cardSelect, setCardSelect] = useState<CardType[] | null>(null);
+
+  const gameInitialized = useRef(false);
+
+
+  function prepareGame() {
+    const newEnemy: EnemyPokemon = getRandomEnemy(pokemonsArray, damageRelations);
+    const newCards = getPokemonCards(pokemonsArray, newEnemy);
+    setEnemy(newEnemy);
+    setCardSelect(newCards);
+  };
+
 
   //zavolání api funkcí s error handlingem 
   useEffect(() => {
     async function loadData() {
       try {
-        // získá pokemony první generace
-        const pokeArray = await getPokemonG1();
+        const pokeArray = await getPokemonG1(); // získá pokemony první generace
         setPokemonsArray(pokeArray);
-        //získá unikátní typy
-        const uniqueTypes = getUniqueTypes(pokeArray)
-        // console.log(uniqueTypes);
-        //získá double_damage_from ke všem typům
-        const relations = await getTypeDamageRelations(uniqueTypes);
+        
+        const uniqueTypes = getUniqueTypes(pokeArray) //získá unikátní typy
+
+        const relations = await getTypeDamageRelations(uniqueTypes); //získá double_damage_from ke všem typům
         setDamageRelations(relations);
+
       } catch { // když se to pokazí
         setError("Nepodařilo se načíst Pokémony.");
       } finally { //když se podaří i nepodaří
@@ -38,28 +49,27 @@ function PokemonGame() {
   }, []);
 
   useEffect(() => {
-    if (damageRelations.length === 0 || pokemonsArray.length === 0) {
-        return;
-      }
-      const newEnemy = getRandomEnemy(pokemonsArray, damageRelations);
-      setEnemy(newEnemy!);
+    if (
+      damageRelations.length === 0 ||
+      pokemonsArray.length === 0 ||
+      gameInitialized.current
+    ) {
+      return;
+    }
+    gameInitialized.current = true;
+    prepareGame();
+  }, [pokemonsArray, damageRelations]); //použiju jen na začátku hry, pak už budu volat prepare game jinde
 
 
-  }, [pokemonsArray, damageRelations]); //dát sem jen něco jako start game
-
-  // console.log(pokemonsArray);
-  // console.log(enemy);
-  // console.log(damageRelations);
-
-  // zobrazení před dokončením loadPokemons
-  if (isLoading) {
+  if (isLoading) {  // zobrazení před dokončením loadPokemons
     return <p>Načítám Pokémony...</p>;
   }
-  // error při chybě s načtením
-  if (error) {
+ 
+  if (error) {  // error při chybě s načtením
     return <p>{error}</p>;
   }
-console.log(enemy);
+  console.log(enemy);
+  console.log(cardSelect);
   return (
     < >
       <h1>Pokemon type battle</h1>

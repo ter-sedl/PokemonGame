@@ -13,8 +13,7 @@ export type EnemyPokemon = {
   name: string;
   types: string[];
   image: string;
-  defeatetBy: string[],
-  notDefeatedBy: string[],
+  defeatedBy: string[],
 };
 
 export type PokeType = {
@@ -26,3 +25,10 @@ export type DamageRelations = {
   type: string;
   doubleDamageFrom: string[];
 };
+
+export type CardType = {
+  name: string;
+  types: string[];
+  image: string;
+  isWinner: boolean;
+}
