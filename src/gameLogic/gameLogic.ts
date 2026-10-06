@@ -70,17 +70,48 @@ export function getPokemonCards(
                 (type) => !enemyPokemon.defeatedBy.includes(type)
             )
     );
-    // vybere 2 pokemony
-    const randomLosers = losers
-        .sort(() => Math.random() - 0.5)
-        .slice(0, 2);
 
-    randomLosers.forEach((pokemon) => {
-        pokemonCards.push({
-            ...pokemon,
-            isWinner: false,
-        });
+    // Náhodný první loser
+    const firstLoser =
+        losers[Math.floor(Math.random() * losers.length)];
+
+    if (!firstLoser) {
+        return pokemonCards;
+    }
+
+    // Najdeme druhého losera,
+    // který nemá žádný společný typ s prvním loserem
+    const possibleSecondLosers = losers.filter(
+        (pokemon) =>
+            pokemon !== firstLoser &&
+            !pokemon.types.some((type) =>
+                firstLoser.types.includes(type)
+            )
+    );
+
+    // Náhodný druhý loser
+    const secondLoser =
+        possibleSecondLosers[
+        Math.floor(Math.random() * possibleSecondLosers.length)
+        ];
+
+    if (!secondLoser) {
+        return pokemonCards;
+    }
+
+    // Přidáme oba losery
+    pokemonCards.push({
+        ...firstLoser,
+        isWinner: false,
     });
+
+    pokemonCards.push({
+        ...secondLoser,
+        isWinner: false,
+    });
+
+
+
 
     // shuffle se zachováním pokemonCards (jen pro zajímavost, nepotřebné)
     const shuffledCards = [...pokemonCards].sort(() => Math.random() - 0.5);
