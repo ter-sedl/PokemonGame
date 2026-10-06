@@ -70,13 +70,17 @@ function PokemonGame() {
   }
   console.log(enemy);
   console.log(cardSelect);
+  if (enemy === null) {
+    return
+  }
+
   return (
     < >
       <h1>Pokemon type battle</h1>
       <ScoreBoard />
-      <BattleField />
+      <BattleField enemy={enemy} />
       <h3>Vyber pokemona, který porazí nepřítele</h3>
-      <PokemonChoices />
+      <PokemonChoices options={cardSelect} />
       <ResultExplanation />
     </>
   )

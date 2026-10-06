@@ -1,12 +1,12 @@
 import Card from "./Card"
 import styles from "./PokemonChoices.module.css"
 
-function PokemonChoices() {
+function PokemonChoices( {options}): any {
     return (
         <div className={styles.choiceField}>
-            <Card />
-            <Card />
-            <Card />
+            <Card pokemon = {options[0]}/>
+            <Card pokemon = {options[1]}/>
+            <Card pokemon = {options[2]}/>
         </div>
     )
 }
