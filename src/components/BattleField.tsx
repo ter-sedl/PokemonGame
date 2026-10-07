@@ -1,18 +1,20 @@
 import Card from "./Card"
 import styles from "./BattleField.module.css";
 import BattleButton from "./BattleButton";
-// import type { EnemyPokemon } from "../types/gameTypes";
+import type { BattleFieldEnemyProps } from "../types/gameTypes";
 
-
-function BattleField( {enemy}: any) {
-console.log("BattleField enemy:", enemy);
+function BattleField({ enemy }: BattleFieldEnemyProps) {
+    console.log("BattleField enemy:", enemy);
 
     return (
         <div className={styles.battleField}>
             <div className={styles.cardHolder}>Tvůj výběr</div>
             {/* <Card/> */}
             <BattleButton />
-            <Card pokemon = {enemy}/>
+            <Card
+                name={enemy.name}
+                types={enemy.types}
+                image={enemy.image} />
         </div>
     )
 };

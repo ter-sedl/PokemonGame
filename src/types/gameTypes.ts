@@ -32,3 +32,18 @@ export type CardType = {
   image: string;
   isWinner: boolean;
 }
+
+export type CardProps = {
+  name: string;
+  types: string[];
+  image: string;
+  isWinner?: boolean;
+};
+
+export type PokemonChoicesProps = {
+  options: CardType[];
+};
+
+export type BattleFieldEnemyProps = {
+  enemy: EnemyPokemon
+};

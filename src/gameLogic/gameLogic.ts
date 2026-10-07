@@ -111,8 +111,6 @@ export function getPokemonCards(
     });
 
 
-
-
     // shuffle se zachováním pokemonCards (jen pro zajímavost, nepotřebné)
     const shuffledCards = [...pokemonCards].sort(() => Math.random() - 0.5);
 

@@ -33,7 +33,7 @@ function PokemonGame() {
       try {
         const pokeArray = await getPokemonG1(); // získá pokemony první generace
         setPokemonsArray(pokeArray);
-        
+
         const uniqueTypes = getUniqueTypes(pokeArray) //získá unikátní typy
 
         const relations = await getTypeDamageRelations(uniqueTypes); //získá double_damage_from ke všem typům
@@ -64,7 +64,7 @@ function PokemonGame() {
   if (isLoading) {  // zobrazení před dokončením loadPokemons
     return <p>Načítám Pokémony...</p>;
   }
- 
+
   if (error) {  // error při chybě s načtením
     return <p>{error}</p>;
   }
@@ -80,7 +80,8 @@ function PokemonGame() {
       <ScoreBoard />
       <BattleField enemy={enemy} />
       <h3>Vyber pokemona, který porazí nepřítele</h3>
-      <PokemonChoices options={cardSelect} />
+      {/* vyhnout se null v cardSelect */}
+      {cardSelect && <PokemonChoices options={cardSelect} />}
       <ResultExplanation />
     </>
   )
