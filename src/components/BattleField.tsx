@@ -11,10 +11,10 @@ function BattleField({ enemy }: BattleFieldEnemyProps) {
             <div className={styles.cardHolder}>Tvůj výběr</div>
             {/* <Card/> */}
             <BattleButton />
-            <Card
+            {enemy && (<Card
                 name={enemy.name}
                 types={enemy.types}
-                image={enemy.image} />
+                image={enemy.image} />)}
         </div>
     )
 };

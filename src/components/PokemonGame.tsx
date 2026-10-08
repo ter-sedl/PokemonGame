@@ -3,9 +3,10 @@ import PokemonChoices from "./PokemonChoices"
 import ResultExplanation from "./ResultExplanation"
 import ScoreBoard from "./ScoreBoard"
 import { getPokemonG1, getTypeDamageRelations } from "../api/pokeApi"
-import { useEffect, useRef, useState } from "react"
+import { useEffect, useRef, useState, useReducer } from "react"
 import type { Pokemon, DamageRelations, EnemyPokemon, CardType } from "../types/gameTypes"
 import { getUniqueTypes, getRandomEnemy, getPokemonCards } from "../gameLogic/gameLogic"
+import { gameReducer } from "../game/gameReducer"
 
 function PokemonGame() {
 
@@ -13,8 +14,16 @@ function PokemonGame() {
   const [damageRelations, setDamageRelations] = useState<DamageRelations[] | []>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [enemy, setEnemy] = useState<EnemyPokemon | null>(null);
-  const [cardSelect, setCardSelect] = useState<CardType[] | null>(null);
+
+
+
+  const [gameState, dispatch] = useReducer(
+    gameReducer,
+    {
+      enemy: null,
+      cardSelect: null,
+    }
+  );
 
   const gameInitialized = useRef(false);
 
@@ -22,8 +31,11 @@ function PokemonGame() {
   function prepareGame() {
     const newEnemy: EnemyPokemon = getRandomEnemy(pokemonsArray, damageRelations);
     const newCards = getPokemonCards(pokemonsArray, newEnemy);
-    setEnemy(newEnemy);
-    setCardSelect(newCards);
+    dispatch({ 
+      type: "PREPARE_GAME",
+      enemy: newEnemy,
+      cards: newCards, // action cards zmněná cardSelect v reduceru
+    });
   };
 
 
@@ -68,9 +80,9 @@ function PokemonGame() {
   if (error) {  // error při chybě s načtením
     return <p>{error}</p>;
   }
-  console.log(enemy);
-  console.log(cardSelect);
-  if (enemy === null) {
+  console.log(gameState.enemy);
+  console.log(gameState.cardSelect);
+  if (gameState.enemy === null) {
     return
   }
 
@@ -78,10 +90,10 @@ function PokemonGame() {
     < >
       <h1>Pokemon type battle</h1>
       <ScoreBoard />
-      <BattleField enemy={enemy} />
+      <BattleField enemy={gameState.enemy} />
       <h3>Vyber pokemona, který porazí nepřítele</h3>
       {/* vyhnout se null v cardSelect */}
-      {cardSelect && <PokemonChoices options={cardSelect} />}
+      {gameState.cardSelect && <PokemonChoices options={gameState.cardSelect} />}
       <ResultExplanation />
     </>
   )

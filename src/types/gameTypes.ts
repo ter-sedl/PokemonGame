@@ -45,5 +45,5 @@ export type PokemonChoicesProps = {
 };
 
 export type BattleFieldEnemyProps = {
-  enemy: EnemyPokemon
+  enemy: EnemyPokemon | null;
 };
