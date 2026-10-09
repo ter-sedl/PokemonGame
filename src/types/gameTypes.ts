@@ -38,12 +38,20 @@ export type CardProps = {
   types: string[];
   image: string;
   isWinner?: boolean;
+  onDragStart?: () => void;
+  onDragEnd?: () => void;
+  size?: "normal" | "large";
 };
 
 export type PokemonChoicesProps = {
   options: CardType[];
+  onDragStart: (pokemon: CardType) => void;
+  onDragEnd?: () => void;
 };
 
-export type BattleFieldEnemyProps = {
+export type BattleFieldProps = {
   enemy: EnemyPokemon | null;
+  selectedPokemon: CardType | null;
+  onDrop: () => void;
+  dragging: CardType;
 };

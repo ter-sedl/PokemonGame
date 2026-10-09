@@ -1,5 +1,5 @@
 .battleField {
-      width: calc(100% - 12px);
+    width: calc(100% - 12px);
     max-width: 800px;
     margin: 0 auto;
 
@@ -18,4 +18,8 @@
 
     border: 2px dashed #aaa;
 
+}
+
+.dragging {
+    border: 3px solid #a47b7b;
 }

@@ -1,12 +1,12 @@
 import type { GameAction, GameState } from "./gameTypes";
 
-// export const initialGameState: GameState = {
-//     enemy: null,
-//     cardSelect: null,
-//     selectedPokemon: null,
-//     score: 0,
-//     result: null,
-// };
+export const initialGameState: GameState = {
+  enemy: null,
+  cardSelect: null,
+  selectedPokemon: null,
+  //     score: 0,
+  //     result: null,
+};
 
 export function gameReducer(
   state: GameState,
@@ -17,6 +17,13 @@ export function gameReducer(
       return {
         enemy: action.enemy,
         cardSelect: action.cards, // array 3 pokemon" pro hráče
+        selectedPokemon: null,
+      };
+
+    case "SELECT_POKEMON":
+      return {
+        ...state,
+        selectedPokemon: action.pokemon,
       };
 
     default:

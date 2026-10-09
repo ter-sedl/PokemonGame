@@ -4,7 +4,7 @@ import ResultExplanation from "./ResultExplanation"
 import ScoreBoard from "./ScoreBoard"
 import { getPokemonG1, getTypeDamageRelations } from "../api/pokeApi"
 import { useEffect, useRef, useState, useReducer } from "react"
-import type { Pokemon, DamageRelations, EnemyPokemon, CardType } from "../types/gameTypes"
+import { type Pokemon, type DamageRelations, type EnemyPokemon, type CardType } from "../types/gameTypes"
 import { getUniqueTypes, getRandomEnemy, getPokemonCards } from "../gameLogic/gameLogic"
 import { gameReducer } from "../game/gameReducer"
 
@@ -14,7 +14,7 @@ function PokemonGame() {
   const [damageRelations, setDamageRelations] = useState<DamageRelations[] | []>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-
+  const [draggedPokemon, setDraggedPokemon] = useState<CardType | null>(null);
 
 
   const [gameState, dispatch] = useReducer(
@@ -22,6 +22,7 @@ function PokemonGame() {
     {
       enemy: null,
       cardSelect: null,
+      selectedPokemon: null,
     }
   );
 
@@ -31,13 +32,34 @@ function PokemonGame() {
   function prepareGame() {
     const newEnemy: EnemyPokemon = getRandomEnemy(pokemonsArray, damageRelations);
     const newCards = getPokemonCards(pokemonsArray, newEnemy);
-    dispatch({ 
+    dispatch({
       type: "PREPARE_GAME",
       enemy: newEnemy,
       cards: newCards, // action cards zmněná cardSelect v reduceru
     });
   };
 
+  function handlerDragStart(pokemon: CardType) {
+    setDraggedPokemon(pokemon)
+  };
+
+  function handeDragEnd() {
+    setDraggedPokemon(null);
+    console.log("nulled")
+  };
+
+  function handleDrop() {
+    if (!draggedPokemon) {
+      return;
+    };
+
+    dispatch({
+      type: "SELECT_POKEMON",
+      pokemon: draggedPokemon
+    });
+
+    setDraggedPokemon(null);
+  };
 
   //zavolání api funkcí s error handlingem 
   useEffect(() => {
@@ -80,20 +102,29 @@ function PokemonGame() {
   if (error) {  // error při chybě s načtením
     return <p>{error}</p>;
   }
-  console.log(gameState.enemy);
-  console.log(gameState.cardSelect);
+
   if (gameState.enemy === null) {
     return
   }
+
+console.log(draggedPokemon);
 
   return (
     < >
       <h1>Pokemon type battle</h1>
       <ScoreBoard />
-      <BattleField enemy={gameState.enemy} />
+      <BattleField
+        enemy={gameState.enemy}
+        selectedPokemon={gameState.selectedPokemon}
+        onDrop={handleDrop}
+        dragging={draggedPokemon!}
+      />
       <h3>Vyber pokemona, který porazí nepřítele</h3>
       {/* vyhnout se null v cardSelect */}
-      {gameState.cardSelect && <PokemonChoices options={gameState.cardSelect} />}
+      {gameState.cardSelect && <PokemonChoices
+        options={gameState.cardSelect}
+        onDragStart={handlerDragStart} 
+        onDragEnd = {handeDragEnd}/>}
       <ResultExplanation />
     </>
   )
