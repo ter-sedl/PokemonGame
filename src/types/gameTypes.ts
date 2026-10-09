@@ -41,6 +41,7 @@ export type CardProps = {
   onDragStart?: () => void;
   onDragEnd?: () => void;
   size?: "normal" | "large";
+  dragabble?: boolean;
 };
 
 export type PokemonChoicesProps = {

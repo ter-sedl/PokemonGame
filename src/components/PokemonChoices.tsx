@@ -18,6 +18,7 @@ function PokemonChoices({
                     isWinner={pokemon.isWinner}
                     onDragStart={() => onDragStart(pokemon)}
                     onDragEnd={onDragEnd}
+                    dragabble={true}
                 />
             ))}
         </div>

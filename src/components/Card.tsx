@@ -1,9 +1,18 @@
+import { useState } from "react";
 import type { CardProps } from "../types/gameTypes";
 import styles from "./Card.module.css"
 
-function Card({ name, types, image, isWinner, onDragStart, onDragEnd, size }: CardProps) {
-    
-    
+function Card({ 
+    name, 
+    types, 
+    image, 
+    isWinner, 
+    onDragStart, 
+    onDragEnd, 
+    size, 
+    dragabble = false }: CardProps) {
+
+    const [isDragging, setIsDragging] = useState(false);
     // console.log("Card pokemon:", name, types, isWinner);
 
     function capitalize(text: string) {
@@ -15,12 +24,19 @@ function Card({ name, types, image, isWinner, onDragStart, onDragEnd, size }: Ca
             className={`
                 ${styles.card} 
                 ${size === "large" ? styles.large : ""}
+                ${isDragging ? styles.dragging : ""}
             `}
-            draggable
-            onDragStart={onDragStart}
-            onDragEnd={onDragEnd}
+            draggable = {dragabble}
+            onDragStart={() => {
+                onDragStart?.()
+                setIsDragging(true);
+            }}
+            onDragEnd={() => {
+                onDragEnd?.();
+                setIsDragging(false);
+            }}
         >
-            <img src={image} alt="" />
+            <img src={image} alt="" draggable={dragabble}/>
             <h3>{capitalize(name)}</h3>
             <p>{types.join(" ")}</p>
         </div>

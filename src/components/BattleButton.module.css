@@ -1,4 +1,6 @@
 .battleButton {
+  user-select: none;
+  
   width: clamp(50px, 17vw, 100px);
   aspect-ratio: 1 / 1;
 

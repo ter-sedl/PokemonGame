@@ -38,7 +38,8 @@ function BattleField({
                 enemy && (<Card
                     name={enemy.name}
                     types={enemy.types}
-                    image={enemy.image} />)
+                    image={enemy.image}
+                />)
             }
         </div >
     )
