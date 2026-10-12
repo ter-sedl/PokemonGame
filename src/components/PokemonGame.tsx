@@ -8,6 +8,7 @@ import { type Pokemon, type DamageRelations, type EnemyPokemon, type CardType } 
 import { getUniqueTypes, getRandomEnemy, getPokemonCards } from "../gameLogic/gameLogic"
 import { gameReducer } from "../gameReducer/gameReducer"
 import styles from "./PokemonGame.module.css";
+import { GameContext } from "../context/GameContext"
 
 function PokemonGame() {
   // true když se jedná o dotykový display
@@ -127,24 +128,26 @@ function PokemonGame() {
   // console.log(draggedPokemon);
 
   return (
-    <div className={styles.game} >
-      <h1>Pokemon type battle</h1>
-      <ScoreBoard />
-      <BattleField
-        enemy={gameState.enemy}
-        selectedPokemon={gameState.selectedPokemon}
-        onDrop={handleDrop}
-        dragging={draggedPokemon!}
-      />
-      <h3>Vyber pokemona, který porazí nepřítele</h3>
-      {/* vyhnout se null v cardSelect */}
-      {gameState.cardSelect && <PokemonChoices
-        options={gameState.cardSelect}
-        onDragStart={handlerDragStart}
-        onDragEnd={handeDragEnd}
-        onClick={handlePokemonClick} />}
-      <ResultExplanation />
-    </div>
+    <GameContext.Provider value={gameState}>
+      <div className={styles.game} >
+        <h1>Pokemon type battle</h1>
+        <ScoreBoard />
+        <BattleField
+          enemy={gameState.enemy}
+          selectedPokemon={gameState.selectedPokemon}
+          onDrop={handleDrop}
+          dragging={draggedPokemon!}
+        />
+        <h3>Vyber pokemona, který porazí nepřítele</h3>
+        {/* vyhnout se null v cardSelect */}
+        {gameState.cardSelect && <PokemonChoices
+          options={gameState.cardSelect}
+          onDragStart={handlerDragStart}
+          onDragEnd={handeDragEnd}
+          onClick={handlePokemonClick} />}
+        <ResultExplanation />
+      </div>
+    </GameContext.Provider>
   )
 }
 export default PokemonGame

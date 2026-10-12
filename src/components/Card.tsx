@@ -39,7 +39,7 @@ function Card({
                 setIsDragging(false);
             }}
         >
-            <img src={image} alt="" draggable={dragabble} />
+            <img src={image} alt="" draggable={false} />
             <h3>{capitalize(name)}</h3>
             <p>{types.join(" ")}</p>
         </div>
