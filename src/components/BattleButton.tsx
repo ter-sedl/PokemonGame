@@ -15,7 +15,7 @@ function BattleButton() {
             className={`
                  ${styles.battleButton}
                  ${hasSelectedPokemon ? styles.active : ""}
-            `}
+        `}
             disabled={hasSelectedPokemon ? false : true}
         >
             ⚔️<br /> Souboj

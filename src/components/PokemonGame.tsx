@@ -27,6 +27,7 @@ function PokemonGame() {
       enemy: null,
       cardSelect: null,
       selectedPokemon: null,
+      status: "playing",
     }
   );
 
@@ -65,6 +66,19 @@ function PokemonGame() {
     setDraggedPokemon(null);
   };
 
+  function handleResults(pokemon: CardType) {
+    if (pokemon.isWinner) {
+      dispatch({
+        type: "WON",
+      });
+    }
+    else {
+      dispatch({
+        type: "LOST",
+      });
+    }
+  };
+  
 
 
   function handlePokemonClick(pokemon: CardType) {

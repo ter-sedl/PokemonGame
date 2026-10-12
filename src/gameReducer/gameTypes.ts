@@ -1,9 +1,10 @@
-import type { CardType, EnemyPokemon } from "../types/gameTypes";
+import type { CardType, EnemyPokemon, GameStatus } from "../types/gameTypes";
 
 export type GameState = {
     enemy: EnemyPokemon | null;
     cardSelect: CardType[] | null;
     selectedPokemon: CardType | null;
+    status: GameStatus;
     // score: number;
     // result: "win" | "lose" | null;
 };
@@ -18,9 +19,12 @@ export type GameAction =
         type: "SELECT_POKEMON";
         pokemon: CardType;
     }
-// | {
-//     type: "BATTLE";
-// }
+    | {
+        type: "WON";
+    }
+    | {
+        type: "LOST";
+    }
 // | {
 //     type: "NEXT_ROUND";
 //     enemy: Pokemon;

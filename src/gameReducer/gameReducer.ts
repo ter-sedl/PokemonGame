@@ -4,6 +4,7 @@ export const initialGameState: GameState = {
   enemy: null,
   cardSelect: null,
   selectedPokemon: null,
+  status: "playing",
   //     score: 0,
   //     result: null,
 };
@@ -18,6 +19,7 @@ export function gameReducer(
         enemy: action.enemy,
         cardSelect: action.cards, // array 3 pokemon" pro hráče
         selectedPokemon: null,
+        status: "playing"
       };
 
     case "SELECT_POKEMON":
@@ -25,6 +27,18 @@ export function gameReducer(
         ...state,
         selectedPokemon: action.pokemon,
       };
+
+    case "WON":
+      return {
+        ...state,
+        status: "won"
+      }
+
+    case "LOST":
+      return {
+        ...state,
+        status: "lost"
+      }
 
     default:
       return state;
