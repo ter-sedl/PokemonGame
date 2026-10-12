@@ -7,8 +7,11 @@ import { useEffect, useRef, useState, useReducer } from "react"
 import { type Pokemon, type DamageRelations, type EnemyPokemon, type CardType } from "../types/gameTypes"
 import { getUniqueTypes, getRandomEnemy, getPokemonCards } from "../gameLogic/gameLogic"
 import { gameReducer } from "../game/gameReducer"
+import styles from "./PokemonGame.module.css";
 
 function PokemonGame() {
+
+  const isTouchDevice = window.matchMedia("(pointer: coarse)").matches;
 
   const [pokemonsArray, setPokemonsArray] = useState<Pokemon[]>([]);
   const [damageRelations, setDamageRelations] = useState<DamageRelations[] | []>([]);
@@ -61,6 +64,20 @@ function PokemonGame() {
     setDraggedPokemon(null);
   };
 
+
+
+  function handlePokemonClick(pokemon: CardType) {
+    {
+      if (isTouchDevice) {
+        dispatch({
+          type: "SELECT_POKEMON",
+          pokemon: pokemon,
+        });
+      }
+    }
+  };
+
+
   //zavolání api funkcí s error handlingem 
   useEffect(() => {
     async function loadData() {
@@ -107,10 +124,10 @@ function PokemonGame() {
     return
   }
 
-console.log(draggedPokemon);
+  // console.log(draggedPokemon);
 
   return (
-    < >
+    <div className={styles.game} >
       <h1>Pokemon type battle</h1>
       <ScoreBoard />
       <BattleField
@@ -123,10 +140,11 @@ console.log(draggedPokemon);
       {/* vyhnout se null v cardSelect */}
       {gameState.cardSelect && <PokemonChoices
         options={gameState.cardSelect}
-        onDragStart={handlerDragStart} 
-        onDragEnd = {handeDragEnd}/>}
+        onDragStart={handlerDragStart}
+        onDragEnd={handeDragEnd}
+        onClick={handlePokemonClick} />}
       <ResultExplanation />
-    </>
+    </div>
   )
 }
 export default PokemonGame

@@ -1,0 +1,11 @@
+.game {
+    max-width: auto;
+}
+
+@media (orientation: landscape) and (max-height: 500px) {
+    .game {
+        max-width: 750px;
+        margin: 0 auto;
+        display: inline-table;
+    }
+}

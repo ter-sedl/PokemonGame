@@ -2,10 +2,13 @@ import type { PokemonChoicesProps } from "../types/gameTypes"
 import Card from "./Card"
 import styles from "./PokemonChoices.module.css"
 
+
+
 function PokemonChoices({
     options,
     onDragStart,
     onDragEnd,
+    onClick
 }: PokemonChoicesProps) {
     return (
         <div className={styles.choiceField}>
@@ -15,10 +18,10 @@ function PokemonChoices({
                     name={pokemon.name}
                     types={pokemon.types}
                     image={pokemon.image}
-                    isWinner={pokemon.isWinner}
                     onDragStart={() => onDragStart(pokemon)}
                     onDragEnd={onDragEnd}
                     dragabble={true}
+                    onClick={() => onClick(pokemon)}
                 />
             ))}
         </div>

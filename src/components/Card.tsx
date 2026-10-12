@@ -2,15 +2,15 @@ import { useState } from "react";
 import type { CardProps } from "../types/gameTypes";
 import styles from "./Card.module.css"
 
-function Card({ 
-    name, 
-    types, 
-    image, 
-    isWinner, 
-    onDragStart, 
-    onDragEnd, 
-    size, 
-    dragabble = false }: CardProps) {
+function Card({
+    name,
+    types,
+    image,
+    onDragStart,
+    onDragEnd,
+    size,
+    dragabble = false,
+    onClick }: CardProps) {
 
     const [isDragging, setIsDragging] = useState(false);
     // console.log("Card pokemon:", name, types, isWinner);
@@ -21,12 +21,13 @@ function Card({
 
     return (
         <div
+            onClick={onClick}
             className={`
                 ${styles.card} 
                 ${size === "large" ? styles.large : ""}
                 ${isDragging ? styles.dragging : ""}
             `}
-            draggable = {dragabble}
+            draggable={dragabble}
             onDragStart={() => {
                 onDragStart?.()
                 setIsDragging(true);
@@ -36,7 +37,7 @@ function Card({
                 setIsDragging(false);
             }}
         >
-            <img src={image} alt="" draggable={dragabble}/>
+            <img src={image} alt="" draggable={dragabble} />
             <h3>{capitalize(name)}</h3>
             <p>{types.join(" ")}</p>
         </div>

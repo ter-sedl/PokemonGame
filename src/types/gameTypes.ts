@@ -37,17 +37,18 @@ export type CardProps = {
   name: string;
   types: string[];
   image: string;
-  isWinner?: boolean;
   onDragStart?: () => void;
   onDragEnd?: () => void;
   size?: "normal" | "large";
   dragabble?: boolean;
+  onClick?: () => void;
 };
 
 export type PokemonChoicesProps = {
   options: CardType[];
   onDragStart: (pokemon: CardType) => void;
   onDragEnd?: () => void;
+  onClick: (pokemon: CardType) => void;
 };
 
 export type BattleFieldProps = {
