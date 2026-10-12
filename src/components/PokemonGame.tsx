@@ -6,7 +6,7 @@ import { getPokemonG1, getTypeDamageRelations } from "../api/pokeApi"
 import { useEffect, useRef, useState, useReducer } from "react"
 import { type Pokemon, type DamageRelations, type EnemyPokemon, type CardType } from "../types/gameTypes"
 import { getUniqueTypes, getRandomEnemy, getPokemonCards } from "../gameLogic/gameLogic"
-import { gameReducer } from "../game/gameReducer"
+import { gameReducer } from "../gameReducer/gameReducer"
 import styles from "./PokemonGame.module.css";
 
 function PokemonGame() {
