@@ -10,7 +10,7 @@ import { gameReducer } from "../game/gameReducer"
 import styles from "./PokemonGame.module.css";
 
 function PokemonGame() {
-
+  // true když se jedná o dotykový display
   const isTouchDevice = window.matchMedia("(pointer: coarse)").matches;
 
   const [pokemonsArray, setPokemonsArray] = useState<Pokemon[]>([]);

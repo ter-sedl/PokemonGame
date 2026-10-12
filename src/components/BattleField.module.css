@@ -18,8 +18,14 @@
 
     border: 2px dashed #aaa;
 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    color: #7d7b7b;
 }
 
 .dragging {
     border: 3px solid #a47b7b;
+    color: rgb(37, 37, 37);
 }

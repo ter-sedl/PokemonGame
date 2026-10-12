@@ -26,10 +26,11 @@ function BattleField({
                         name={selectedPokemon.name}
                         types={selectedPokemon.types}
                         image={selectedPokemon.image}
+                        hasHoover={false}
                         size="large"
                     />
                 ) : (
-                    "Tvůj výběr"
+                    "Přetáhni sem svého pokemona"
                 )}
             </div>
             {/* <Card/> */}
@@ -39,6 +40,7 @@ function BattleField({
                     name={enemy.name}
                     types={enemy.types}
                     image={enemy.image}
+                    hasHoover={false}
                 />)
             }
         </div >

@@ -21,6 +21,7 @@ function PokemonChoices({
                     onDragStart={() => onDragStart(pokemon)}
                     onDragEnd={onDragEnd}
                     dragabble={true}
+                    hasHoover={true}
                     onClick={() => onClick(pokemon)}
                 />
             ))}

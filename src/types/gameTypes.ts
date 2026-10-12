@@ -41,6 +41,7 @@ export type CardProps = {
   onDragEnd?: () => void;
   size?: "normal" | "large";
   dragabble?: boolean;
+  hasHoover: boolean;
   onClick?: () => void;
 };
 

@@ -10,6 +10,7 @@ function Card({
     onDragEnd,
     size,
     dragabble = false,
+    hasHoover,
     onClick }: CardProps) {
 
     const [isDragging, setIsDragging] = useState(false);
@@ -26,6 +27,7 @@ function Card({
                 ${styles.card} 
                 ${size === "large" ? styles.large : ""}
                 ${isDragging ? styles.dragging : ""}
+                ${hasHoover ? styles.hasHoover : ""}
             `}
             draggable={dragabble}
             onDragStart={() => {
