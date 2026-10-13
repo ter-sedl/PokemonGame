@@ -57,9 +57,11 @@ export type BattleFieldProps = {
   selectedPokemon: CardType | null;
   onDrop: () => void;
   dragging: CardType;
+  handleResults: () => void;
 };
 
 export type BattleButtonType = {
+  handleResults: () => void;
 }
 
 export type GameStatus = "playing" | "won" | "lost";

@@ -66,16 +66,21 @@ function PokemonGame() {
     setDraggedPokemon(null);
   };
 
-  function handleResults(pokemon: CardType) {
-    if (pokemon.isWinner) {
+  function handleResults() {
+    if (!gameState.selectedPokemon) {
+      return
+    }
+    if (gameState.selectedPokemon.isWinner) {
       dispatch({
         type: "WON",
       });
-    }
+      console.log("won")
+        }
     else {
       dispatch({
         type: "LOST",
       });
+      console.log("lost")
     }
   };
   
@@ -151,6 +156,7 @@ function PokemonGame() {
           selectedPokemon={gameState.selectedPokemon}
           onDrop={handleDrop}
           dragging={draggedPokemon!}
+          handleResults={handleResults}
         />
         <h3>Vyber pokemona, který porazí nepřítele</h3>
         {/* vyhnout se null v cardSelect */}

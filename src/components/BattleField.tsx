@@ -8,6 +8,7 @@ function BattleField({
     selectedPokemon,
     onDrop,
     dragging,
+    handleResults,
 }: BattleFieldProps) {
 
 
@@ -34,7 +35,7 @@ function BattleField({
                 )}
             </div>
             {/* <Card/> */}
-            <BattleButton />
+            <BattleButton handleResults={handleResults} />
             {
                 enemy && (<Card
                     name={enemy.name}
