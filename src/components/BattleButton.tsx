@@ -5,22 +5,30 @@ import type { BattleButtonType } from "../types/gameTypes";
 
 
 
-function BattleButton( {handleResults}: BattleButtonType) {
+function BattleButton({ handleResults, prepareGame }: BattleButtonType) {
 
     const gameState = useContext(GameContext);
     const hasSelectedPokemon = gameState?.selectedPokemon !== null
         && gameState?.selectedPokemon !== undefined;
+
+    const gameStatus = gameState?.status;
+
+    const contentPlaying = <>⚔️<br /> Souboj </>;
+
+    const contentNext = <>⟳<br /> Znovu </>;
+
 
     return (
         <button
             className={`
                  ${styles.battleButton}
                  ${hasSelectedPokemon ? styles.active : ""}
+                 ${gameStatus === "playing" ? "" : styles.next}
         `}
             disabled={hasSelectedPokemon ? false : true}
-            onClick={handleResults}
+            onClick={gameStatus === "playing" ? handleResults : prepareGame}
         >
-            ⚔️<br /> Souboj
+            {gameStatus === "playing" ? contentPlaying : contentNext}
         </button>
     )
 }

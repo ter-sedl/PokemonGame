@@ -44,3 +44,7 @@
 .battleButton.active:active {
   transform: scale(0.96);
 }
+
+.battleButton.next {
+  background: #f0a044;
+}

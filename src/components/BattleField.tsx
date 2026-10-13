@@ -9,6 +9,7 @@ function BattleField({
     onDrop,
     dragging,
     handleResults,
+    prepareGame,
 }: BattleFieldProps) {
 
 
@@ -35,7 +36,9 @@ function BattleField({
                 )}
             </div>
             {/* <Card/> */}
-            <BattleButton handleResults={handleResults} />
+            <BattleButton 
+            handleResults={handleResults} 
+            prepareGame={prepareGame} />
             {
                 enemy && (<Card
                     name={enemy.name}

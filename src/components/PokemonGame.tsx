@@ -85,7 +85,6 @@ function PokemonGame() {
   };
   
 
-
   function handlePokemonClick(pokemon: CardType) {
     {
       if (isTouchDevice) {
@@ -157,6 +156,7 @@ function PokemonGame() {
           onDrop={handleDrop}
           dragging={draggedPokemon!}
           handleResults={handleResults}
+          prepareGame={prepareGame}
         />
         <h3>Vyber pokemona, který porazí nepřítele</h3>
         {/* vyhnout se null v cardSelect */}

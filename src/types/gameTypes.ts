@@ -58,10 +58,12 @@ export type BattleFieldProps = {
   onDrop: () => void;
   dragging: CardType;
   handleResults: () => void;
+  prepareGame: () => void;
 };
 
 export type BattleButtonType = {
   handleResults: () => void;
+  prepareGame: () => void;
 }
 
 export type GameStatus = "playing" | "won" | "lost";
