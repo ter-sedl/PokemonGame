@@ -149,7 +149,6 @@ function PokemonGame() {
     <GameContext.Provider value={gameState}>
       <div className={styles.game} >
         <h1>Pokemon type battle</h1>
-        <ScoreBoard />
         <BattleField
           enemy={gameState.enemy}
           selectedPokemon={gameState.selectedPokemon}
@@ -158,7 +157,7 @@ function PokemonGame() {
           handleResults={handleResults}
           prepareGame={prepareGame}
         />
-        <h3>Vyber pokemona, který porazí nepřítele</h3>
+        <ScoreBoard />
         {/* vyhnout se null v cardSelect */}
         {gameState.cardSelect && <PokemonChoices
           options={gameState.cardSelect}
