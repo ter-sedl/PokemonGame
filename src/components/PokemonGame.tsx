@@ -1,6 +1,5 @@
 import BattleField from "./BattleField"
 import PokemonChoices from "./PokemonChoices"
-import ResultExplanation from "./ResultExplanation"
 import ScoreBoard from "./ScoreBoard"
 import { getPokemonG1, getTypeDamageRelations } from "../api/pokeApi"
 import { useEffect, useRef, useState, useReducer } from "react"
@@ -75,7 +74,7 @@ function PokemonGame() {
         type: "WON",
       });
       console.log("won")
-        }
+    }
     else {
       dispatch({
         type: "LOST",
@@ -83,7 +82,7 @@ function PokemonGame() {
       console.log("lost")
     }
   };
-  
+
 
   function handlePokemonClick(pokemon: CardType) {
     {
@@ -158,13 +157,11 @@ function PokemonGame() {
           prepareGame={prepareGame}
         />
         <ScoreBoard />
-        {/* vyhnout se null v cardSelect */}
         {gameState.cardSelect && <PokemonChoices
           options={gameState.cardSelect}
           onDragStart={handlerDragStart}
           onDragEnd={handeDragEnd}
           onClick={handlePokemonClick} />}
-        <ResultExplanation />
       </div>
     </GameContext.Provider>
   )

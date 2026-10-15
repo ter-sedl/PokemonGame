@@ -10,11 +10,21 @@ function ScoreBoard() {
     const hiddenContent = `${enemyName} dostává dvojé poškození od ${doubleDmgTypes} `;
     const gameStatus = gameState?.status;
 
+    const resultWon = <h2>Vítězství</h2>;
+    const resultLost = <h2>Prohra</h2>
+    const howToPlay = <h3>Podle typu vyber nejsilnějšího šampiona</h3>
+
+    const statusContent = {
+        playing: howToPlay,
+        won: resultWon,
+        lost: resultLost,
+    };
+
 
 
     return (
-        <div>
-            <h3>Vítězství</h3>
+        <div className={styles.scoreBoard}>
+            <div>{gameStatus ? statusContent[gameStatus] : "Prosím o strpení"}</div>
             <div 
             className={`
                 ${styles.help}
