@@ -39,6 +39,8 @@ export type CardProps = {
   image: string;
   onDragStart?: () => void;
   onDragEnd?: () => void;
+  afterGameDisable?: boolean;
+  isWinner?: boolean;
   size?: "normal" | "large";
   dragabble?: boolean;
   hasHoover: boolean;

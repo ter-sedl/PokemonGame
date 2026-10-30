@@ -2,6 +2,8 @@ import Card from "./Card"
 import styles from "./BattleField.module.css";
 import BattleButton from "./BattleButton";
 import type { BattleFieldProps } from "../types/gameTypes";
+import { useContext } from "react";
+import { GameContext } from "../context/GameContext";
 
 function BattleField({
     enemy,
@@ -13,7 +15,8 @@ function BattleField({
 }: BattleFieldProps) {
 
 
-    // console.log("BattleField enemy:", enemy);
+    const gameState = useContext(GameContext);
+    const status = gameState?.status;
 
     return (
         <div className={styles.battleField}>
@@ -29,6 +32,7 @@ function BattleField({
                         types={selectedPokemon.types}
                         image={selectedPokemon.image}
                         hasHoover={false}
+                        afterGameDisable={status === "lost" ? true : false}
                         size="large"
                     />
                 ) : (

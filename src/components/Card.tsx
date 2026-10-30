@@ -1,6 +1,7 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import type { CardProps } from "../types/gameTypes";
 import styles from "./Card.module.css"
+import { GameContext } from "../context/GameContext";
 
 function Card({
     name,
@@ -8,10 +9,15 @@ function Card({
     image,
     onDragStart,
     onDragEnd,
+    afterGameDisable,
+    isWinner,
     size,
     dragabble = false,
     hasHoover,
     onClick }: CardProps) {
+
+    const gameState = useContext(GameContext);
+    const status = gameState?.status;
 
     const [isDragging, setIsDragging] = useState(false);
     // console.log("Card pokemon:", name, types, isWinner);
@@ -28,8 +34,10 @@ function Card({
                 ${size === "large" ? styles.large : ""}
                 ${isDragging ? styles.dragging : ""}
                 ${hasHoover ? styles.hasHoover : ""}
+                ${afterGameDisable ? styles.afterGameDisable : ""}
+                ${status !== "playing" && isWinner === false ? styles.afterGameDisable : ""}
             `}
-            draggable={dragabble}
+            draggable={status !== "playing" ? false : dragabble}
             onDragStart={() => {
                 onDragStart?.()
                 setIsDragging(true);
